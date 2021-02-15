@@ -1,0 +1,60 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /v1/api
+
+spring:
+  profiles: default
+  application:
+    name: api-ip-info
+  datasource:
+    url: jdbc:mysql://3.22.213.146:3306/iptrace?autoReconnect=true&useSSL=false&allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true&useUnicode=yes&characterEnconding=UTF-8
+    username: root
+    password: 123456789
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+hibernate:
+  hbm2ddl:
+    auto: update
+  show_sql: true
+
+city:
+  latitude: -34.6083
+  longitude: -58.3712
+  measure_unit: KM #(KM: Kilometers, NM: Nautical Miles, MI: Miles)
+
+currency:
+  api_acces_key: 53653b935efd16cace9e945b66a4e053
+  exchange: EUR
+
+cron:
+  currency_exchange: 0 0 1/1 * * ?
+
+---
+
+spring:
+  profiles: qa
+  application:
+    name: api-ip-info
+  datasource:
+    url: ${SPRING_DATASOURCE_URL}
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
+    driver-class-name: ${SPRING_DATASOURCE_DRIVER_CLASS_NAME}
+
+hibernate:
+  hbm2ddl:
+    auto: update
+  show_sql: false
+
+city:
+  lat: ${CITY_LATITUDE}
+  long: ${CITY_LONGITUDE}
+  measure_unit: ${DISTANCE_MEASURE_UNIT} #(KM: Kilometers, NM: Nautical Miles, MI: Miles)
+
+currency:
+  api_acces_key: ${API_ACCESS_KEY}
+  exchange: ${CURRENCY_EXCHANGE}
+
+cron:
+  currencyExchange: ${CRON_TIME_EXCHANGE}
