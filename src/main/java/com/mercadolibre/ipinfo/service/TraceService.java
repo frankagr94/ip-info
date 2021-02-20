@@ -22,6 +22,9 @@ public class TraceService {
     @Autowired
     private GeneralWebClient generalWebClient;
 
+    @Autowired
+    private CountryStatInfoService countryStatInfoService;
+
     @Value("${city.latitude}")
     private String cityLatitude;
 
@@ -86,6 +89,9 @@ public class TraceService {
     private ResponseTrace mappingResponseTrace(String ip, ResponseCountryInfo respCountryInfo){
         var responseTrace = new ResponseTrace();
 
+        var distance = Util.distance(Double.valueOf(cityLatitude),Double.valueOf(cityLongitude),
+                Double.valueOf(respCountryInfo.getLatlng().get(0)),Double.valueOf(respCountryInfo.getLatlng().get(1)),measureUnit);
+
         responseTrace.setIp(ip.trim());
         responseTrace.setDate(Util.getCurrentDate());
         responseTrace.setCountry(respCountryInfo.getName());
@@ -99,8 +105,9 @@ public class TraceService {
         responseTrace.setTimes(respCountryInfo.getTimezones().stream()
                 .map(timezone -> Util.getDatetimeByTimeZone(timezone)+" ("+timezone+")")
                 .collect(Collectors.toList()));
-        responseTrace.setEstimated_distance(Util.distance(Double.valueOf(cityLatitude),Double.valueOf(cityLongitude),
-                Double.valueOf(respCountryInfo.getLatlng().get(0)),Double.valueOf(respCountryInfo.getLatlng().get(1)),measureUnit)+" "+measureUnit);
+        responseTrace.setEstimated_distance(distance + " " + measureUnit);
+
+        countryStatInfoService.saveUpdate(responseTrace.getIso_code(),responseTrace.getCountry(), distance);
 
         return responseTrace;
     }
