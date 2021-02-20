@@ -4,19 +4,21 @@ server:
     context-path: /v1/api
 
 spring:
-  profiles: default
+  config:
+    activate:
+      on-profile: default
   application:
     name: api-ip-info
   datasource:
-    url: jdbc:mysql://3.22.213.146:3306/iptrace?autoReconnect=true&useSSL=false&allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true&useUnicode=yes&characterEnconding=UTF-8
+    url: jdbc:mysql://18.222.87.254:3305/iptrace?autoReconnect=true&useSSL=false&allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true&useUnicode=yes&characterEnconding=UTF-8
     username: root
     password: 123456789
     driver-class-name: com.mysql.cj.jdbc.Driver
-
-hibernate:
-  hbm2ddl:
-    auto: update
-  show_sql: true
+  jpa:
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update
+    show-sql: true
 
 city:
   latitude: -34.6083
@@ -28,12 +30,14 @@ currency:
   exchange: EUR
 
 cron:
-  currency_exchange: 0 0 1/1 * * ?
+  currency_exchange: 0 1/1 0 * * ?
 
 ---
 
 spring:
-  profiles: qa
+  config:
+    activate:
+      on-profile: qa
   application:
     name: api-ip-info
   datasource:
@@ -41,11 +45,11 @@ spring:
     username: ${SPRING_DATASOURCE_USERNAME}
     password: ${SPRING_DATASOURCE_PASSWORD}
     driver-class-name: ${SPRING_DATASOURCE_DRIVER_CLASS_NAME}
-
-hibernate:
-  hbm2ddl:
-    auto: update
-  show_sql: false
+    jpa:
+      generate-ddl: true
+      hibernate:
+        ddl-auto: update
+      show-sql: false
 
 city:
   lat: ${CITY_LATITUDE}
