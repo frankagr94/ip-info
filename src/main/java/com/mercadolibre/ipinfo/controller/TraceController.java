@@ -32,7 +32,7 @@ public class TraceController {
     /**
      * Trace Ip Endpoint
      *
-     * @return
+     * @return ResponseEntity
      */
     @ApiOperation(value = "Trace info from IP",
             notes = "This Endpoint will return a complete trace from an IP",

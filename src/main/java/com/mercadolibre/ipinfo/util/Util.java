@@ -41,11 +41,13 @@ public class Util {
         if(resultType == 1){
             log.warn(message);
             response.failed(message,false);
+            return response;
         }
 
         if(resultType == 2){
             log.error(message);
             response.failed(message,true);
+            return response;
         }
 
         log.info(message);

@@ -3,6 +3,7 @@ package com.mercadolibre.ipinfo.service;
 import com.mercadolibre.ipinfo.dto.RequestTrace;
 import com.mercadolibre.ipinfo.dto.ResponseTrace;
 import com.mercadolibre.ipinfo.integration.ResponseCountryInfo;
+import com.mercadolibre.ipinfo.util.IPValidator;
 import com.mercadolibre.ipinfo.util.Response;
 import com.mercadolibre.ipinfo.util.Util;
 import com.mercadolibre.ipinfo.webclient.GeneralWebClient;
@@ -60,6 +61,10 @@ public class TraceService {
                 return Util.getResponseFromService("The IP field from the Request Body, can not be empty",null,TraceService.class,1);
             }
 
+            if(!IPValidator.isValid(requestTrace.getIp().trim())){
+                return Util.getResponseFromService("The IP is not valid",null,TraceService.class,1);
+            }
+
             var geo = generalWebClient.getIpGeolocationInfo(requestTrace.getIp().trim());
 
             if(geo == null){
@@ -96,15 +101,19 @@ public class TraceService {
         responseTrace.setDate(Util.getCurrentDate());
         responseTrace.setCountry(respCountryInfo.getName());
         responseTrace.setIso_code(respCountryInfo.getCioc());
-        responseTrace.setLanguages(respCountryInfo.getLanguages().stream()
+
+        responseTrace.setLanguages(respCountryInfo.getLanguages().stream().parallel()
                 .map(language -> language.getName()+" ("+language.getIso639_1()+")")
                 .collect(Collectors.toList()));
-        responseTrace.setCurrency(respCountryInfo.getCurrencies().stream()
+
+        responseTrace.setCurrency(respCountryInfo.getCurrencies().stream().parallel()
                 .map(currency -> currency.getName()+" ("+currency.getCode()+")"+getCurrencyExchage(currency.getCode()))
                 .collect(Collectors.toList()));
-        responseTrace.setTimes(respCountryInfo.getTimezones().stream()
+
+        responseTrace.setTimes(respCountryInfo.getTimezones().stream().parallel()
                 .map(timezone -> Util.getDatetimeByTimeZone(timezone)+" ("+timezone+")")
                 .collect(Collectors.toList()));
+
         responseTrace.setEstimated_distance(distance + " " + measureUnit);
 
         countryStatInfoService.saveUpdate(responseTrace.getIso_code(),responseTrace.getCountry(), distance);

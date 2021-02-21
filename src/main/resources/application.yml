@@ -26,6 +26,7 @@ city:
   measure_unit: KM #(KM: Kilometers, NM: Nautical Miles, MI: Miles)
 
 currency:
+  process_active: false
   api_acces_key: 53653b935efd16cace9e945b66a4e053
   exchange: EUR
 
@@ -57,6 +58,7 @@ city:
   measure_unit: ${DISTANCE_MEASURE_UNIT} #(KM: Kilometers, NM: Nautical Miles, MI: Miles)
 
 currency:
+  process_active: ${CURRENCY_PROCESS_ACTIVE}
   api_acces_key: ${CURRENCY_API_ACCESS_KEY}
   exchange: ${CURRENCY_EXCHANGE}
 
