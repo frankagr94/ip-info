@@ -29,7 +29,8 @@ public class StatsService {
      * getStats Method
      *
      * It's in charged of consulting and retrieving some stats about the all the succeeded executions
-     * It returns, Farthest Distance and Nearest Distance (Country name, distance, executions number), Average Distance of all executions
+     * It returns, Farthest Distance and Nearest Distance (Country name, distance, executions number),
+     * Average Distance of all executions
      * @return Response class with message, result and ResponseTrace with the info
      */
     public Response getStats(){
@@ -58,17 +59,17 @@ public class StatsService {
     private ResponseStats mappingResponseStats(List<CountryStatInfo> countryStatInfos){
         var responseStats = new ResponseStats();
 
-        responseStats.setFarthest_distance_country(countryStatInfos.parallelStream()
+        responseStats.setFarthest_distance_country(countryStatInfos.stream().parallel()
                 .max(Comparator.comparing(CountryStatInfo::getDistance))
                 .orElseThrow(NoSuchElementException::new));
 
-        responseStats.setNearest_distance_country(countryStatInfos.parallelStream()
+        responseStats.setNearest_distance_country(countryStatInfos.stream().parallel()
                 .min(Comparator.comparing(CountryStatInfo::getDistance))
                 .orElseThrow(NoSuchElementException::new));
 
-        responseStats.setAverage_distance(Math.floor(countryStatInfos.parallelStream()
+        responseStats.setAverage_distance(Math.floor(countryStatInfos.stream().parallel()
                 .mapToDouble(csi -> csi.getDistance() * csi.getInvocations())
-                .sum() / countryStatInfos.parallelStream().mapToInt(CountryStatInfo::getInvocations).sum())
+                .sum() / countryStatInfos.stream().parallel().mapToInt(CountryStatInfo::getInvocations).sum())
                 + " " + measureUnit);
 
         return responseStats;

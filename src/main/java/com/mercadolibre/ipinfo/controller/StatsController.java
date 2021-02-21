@@ -29,7 +29,7 @@ public class StatsController {
     /**
      * getStats Endpoint
      *
-     * @return
+     * @return ResponseEntity
      */
     @ApiOperation(value = "Stats from application",
             notes = "This Endpoint will return a resume from application using",

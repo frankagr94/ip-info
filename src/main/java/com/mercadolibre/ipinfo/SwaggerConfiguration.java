@@ -1,5 +1,9 @@
 package com.mercadolibre.ipinfo;
 
+import com.fasterxml.classmate.TypeResolver;
+import com.mercadolibre.ipinfo.dto.ResponseDTO;
+import com.mercadolibre.ipinfo.dto.ResponseStats;
+import com.mercadolibre.ipinfo.dto.ResponseTrace;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.ApiInfoBuilder;
@@ -24,11 +28,12 @@ public class SwaggerConfiguration {
   private static ApiInfo apiInfo() {
     return new ApiInfoBuilder()
         .title("IP Info API for Mercadolibre Test")
-        .description("")
+        .description("REST API developed to evaluate technical skills, it exposes 2 endpoints," +
+                " one to consult the information about a particular IP and another to consult the usage statistics")
         .license("Apache 2.0")
         .licenseUrl("http://www.apache.org/licenses/LICENSE-2.0")
         .termsOfServiceUrl("")
-        .version("1.0.0")
+        .version("0.0.1")
         .build();
   }
 
@@ -38,12 +43,14 @@ public class SwaggerConfiguration {
    * @return docket
    */
   @Bean
-  public Docket customImplementation() {
+  public Docket customImplementation(TypeResolver typeResolver) {
     return new Docket(DocumentationType.SWAGGER_2)
         .select()
         .apis(RequestHandlerSelectors.basePackage("com.mercadolibre.ipinfo"))
         .build()
-        .apiInfo(apiInfo());
+        .apiInfo(apiInfo()).additionalModels(typeResolver.resolve(ResponseStats.class),
+                    typeResolver.resolve(ResponseTrace.class),
+                    typeResolver.resolve(ResponseDTO.class));
   }
 
 }
