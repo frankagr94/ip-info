@@ -1,7 +1,7 @@
 server:
   port: 8080
   servlet:
-    context-path: /v1/api
+    context-path: /v2/api
 
 spring:
   config:
@@ -10,7 +10,7 @@ spring:
   application:
     name: api-ip-info
   datasource:
-    url: jdbc:mysql://18.222.87.254:3305/iptrace?autoReconnect=true&useSSL=false&allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true&useUnicode=yes&characterEnconding=UTF-8
+    url: jdbc:mysql://3.140.246.194:3305/iptrace?autoReconnect=true&useSSL=false&allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true&useUnicode=yes&characterEnconding=UTF-8
     username: root
     password: 123456789
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -63,4 +63,4 @@ currency:
   exchange: ${CURRENCY_EXCHANGE}
 
 cron:
-  currencyExchange: ${CRON_TIME_EXCHANGE}
+  currency_exchange: ${CRON_TIME_EXCHANGE}
