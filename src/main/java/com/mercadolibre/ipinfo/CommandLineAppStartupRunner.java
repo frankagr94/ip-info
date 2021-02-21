@@ -13,6 +13,6 @@ public class CommandLineAppStartupRunner implements CommandLineRunner {
 
     @Override
     public void run(String...args) {
-        //scheduleTask.currencyExchangeTask();
+        scheduleTask.currencyExchangeTask();
     }
 }
