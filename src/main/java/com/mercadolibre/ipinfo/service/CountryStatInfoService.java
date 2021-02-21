@@ -8,6 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
+import java.util.List;
+
 @Service
 public class CountryStatInfoService {
 
@@ -33,6 +36,11 @@ public class CountryStatInfoService {
         }catch (Exception e){
             log.error("An execution error has ocurred, please contact to the admin : %s", e);
         }
+    }
+
+    public List<CountryStatInfo> getAll(){
+        log.info("IP INFO - CountryStatInfoService - getAll");
+        return (List<CountryStatInfo>) countryStatInfoRepository.findAll();
     }
 
 }

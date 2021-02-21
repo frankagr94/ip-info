@@ -57,7 +57,7 @@ city:
   measure_unit: ${DISTANCE_MEASURE_UNIT} #(KM: Kilometers, NM: Nautical Miles, MI: Miles)
 
 currency:
-  api_acces_key: ${API_ACCESS_KEY}
+  api_acces_key: ${CURRENCY_API_ACCESS_KEY}
   exchange: ${CURRENCY_EXCHANGE}
 
 cron:
