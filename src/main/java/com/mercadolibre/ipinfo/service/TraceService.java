@@ -84,7 +84,7 @@ public class TraceService {
      * It's in charged of mapping on a ResponseTrace instance all the info got
      * @param ip consulted
      * @param respCountryInfo with the ip country info
-     * @return ResponseTrace class with the endpoint info to return
+     * @return ResponseTrace class with the data info to return
      */
     private ResponseTrace mappingResponseTrace(String ip, ResponseCountryInfo respCountryInfo){
         var responseTrace = new ResponseTrace();
