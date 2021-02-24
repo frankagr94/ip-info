@@ -27,7 +27,7 @@ public class CountryStatInfo {
     @Column(unique = true, updatable = false, name = "iso_code", nullable = false, length=3)
     private String isoCode;
 
-    @Column(unique = true, name = "name", nullable = false, length=30)
+    @Column(unique = true, name = "name", nullable = false, length=100)
     private String name;
 
     @Column(name = "distance", nullable = false, columnDefinition="double precision default '0'")
